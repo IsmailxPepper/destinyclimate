@@ -80,3 +80,73 @@ async function loadWeatherData(
     }
 
 }
+const GLOBAL_CITIES = [
+    "Dubai",
+    "London",
+    "Tokyo",
+    "New York",
+    "Singapore",
+    "Paris",
+    "Sydney",
+    "Istanbul"
+];
+
+async function loadGlobalCities(){
+
+    const container =
+    document.getElementById(
+        "globalCities"
+    );
+
+    container.innerHTML = "";
+
+    for(const city of GLOBAL_CITIES){
+
+        try{
+
+            const geoResponse =
+            await fetch(
+                `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
+            );
+
+            const geoData =
+            await geoResponse.json();
+
+            if(!geoData.results) continue;
+
+            const location =
+            geoData.results[0];
+
+            const weatherResponse =
+            await fetch(
+                `${WEATHER_BASE}?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`
+            );
+
+            const weatherData =
+            await weatherResponse.json();
+
+            container.innerHTML += `
+            <div class="glass-card city-card">
+
+                <h3>${city}</h3>
+
+                <div class="city-temp">
+                    ${Math.round(
+                        weatherData.current.temperature_2m
+                    )}°
+                </div>
+
+            </div>
+            `;
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+        }
+
+    }
+
+}
