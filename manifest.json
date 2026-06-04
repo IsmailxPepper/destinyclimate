@@ -1,1 +1,9 @@
+{
+"name": "DesTinY Climate",
+"short_name": "DesTinY",
+"start_url": "./",
+"display": "standalone",
+"background_color": "#081120",
+"theme_color": "#081120"
+}
 
