@@ -23,16 +23,17 @@ const geoResponse = await fetch(
         location.name
     );
 
-} 
+} catch (error) {
+    console.error("City Search Error:", error);
+}
 ```
 
 }
 
 async function loadWeatherData(latitude, longitude, cityName) {
-
-```
 try {
 
+```
     const response = await fetch(
         `${WEATHER_BASE}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&hourly=temperature_2m`
     );
