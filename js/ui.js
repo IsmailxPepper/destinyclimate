@@ -74,8 +74,10 @@ function renderHourlyForecast(hourlyData){
             </div>
 
             <div class="hour-icon">
-                ☁️
-            </div>
+    ${getWeatherIcon(
+        hourlyData.weathercode[hourIndex]
+    )}
+</div>
 
             <div class="hour-temp">
                 ${Math.round(
