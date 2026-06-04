@@ -1,4 +1,3 @@
-:::writing{variant="document" id="71284"}
 const WEATHER_BASE = "https://api.open-meteo.com/v1/forecast";
 const GEO_BASE = "https://geocoding-api.open-meteo.com/v1/search";
 
@@ -50,4 +49,3 @@ async function loadWeatherData(latitude, longitude, cityName) {
 async function loadGlobalCities() {
     console.log("Global cities loaded");
 }
-:::
