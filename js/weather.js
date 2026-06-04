@@ -67,11 +67,13 @@ async function loadWeatherData(
         await response.json();
 
         updateCurrentWeather(
-            cityName,
-            data
-        );
+    cityName,
+    data
+);
 
-    }
+renderHourlyForecast(
+    data.hourly
+);
 
     catch(error){
 
