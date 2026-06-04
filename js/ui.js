@@ -37,62 +37,85 @@ function updateCurrentWeather(
     .split("T")[1];
 
 }
-function renderHourlyForecast(hourlyData){
+function renderDailyForecast(dailyData){
 
-    const container =
-    document.getElementById(
-        "hourlyForecast"
+```
+const container =
+document.getElementById(
+    "dailyForecast"
+);
+
+if(!container) return;
+
+console.log("DAILY DATA:", dailyData);
+
+container.innerHTML = "";
+
+if(
+    !dailyData.time ||
+    !dailyData.temperature_2m_max ||
+    !dailyData.temperature_2m_min
+){
+    container.innerHTML =
+    "<p>Forecast unavailable</p>";
+    return;
+}
+
+for(
+    let i = 0;
+    i < dailyData.time.length;
+    i++
+){
+
+    const date =
+    new Date(
+        dailyData.time[i]
     );
 
-    container.innerHTML = "";
+    const day =
+    i === 0
+    ? "Today"
+    : date.toLocaleDateString(
+        "en-US",
+        {
+            weekday:"short"
+        }
+    );
 
-    const currentHour =
-    new Date().getHours();
+    container.innerHTML += `
 
-    for(let i=0;i<12;i++){
+    <div class="forecast-day">
 
-        const hourIndex =
-        currentHour + i;
+        <span>${day}</span>
 
-        if(
-            !hourlyData.temperature_2m[
-                hourIndex
-            ]
-        ) continue;
+        <span>
+            ${getWeatherIcon(
+                dailyData.weather_code
+                ? dailyData.weather_code[i]
+                : 3
+            )}
+        </span>
 
-        const hour =
-        i === 0
-        ? "NOW"
-        : `${hourIndex % 24}:00`;
+        <span>
+            ${Math.round(
+                dailyData.temperature_2m_min[i]
+            )}°
+        </span>
 
-        container.innerHTML += `
+        <span>
+            ${Math.round(
+                dailyData.temperature_2m_max[i]
+            )}°
+        </span>
 
-        <div class="glass-card hour-card">
+    </div>
 
-            <div class="hour-time">
-                ${hour}
-            </div>
-
-            <div class="hour-icon">
-    ${getWeatherIcon(
-        hourlyData.weathercode[hourIndex]
-    )}
-</div>
-
-            <div class="hour-temp">
-                ${Math.round(
-                    hourlyData.temperature_2m[
-                        hourIndex
-                    ]
-                )}°
-            </div>
-
-        </div>
-
-        `;
-    }
+    `;
+}
+```
 
 }
+
 function getWeatherIcon(code){
 
     if(code === 0) return "☀️";
