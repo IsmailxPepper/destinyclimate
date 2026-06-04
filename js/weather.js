@@ -31,19 +31,19 @@ const geoResponse = await fetch(
 }
 
 async function loadWeatherData(latitude, longitude, cityName) {
-try {
-const response = await fetch(
-`${WEATHER_BASE}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&hourly=temperature_2m`
-);
 
 ```
+try {
+
+    const response = await fetch(
+        `${WEATHER_BASE}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&hourly=temperature_2m`
+    );
+
     const data = await response.json();
 
-    if (typeof updateCurrentWeather === "function") {
-        updateCurrentWeather(cityName, data);
-    }
+    updateCurrentWeather(cityName, data);
 
-    if (typeof renderHourlyForecast === "function" && data.hourly) {
+    if (data.hourly) {
         renderHourlyForecast(data.hourly);
     }
 
@@ -54,55 +54,6 @@ const response = await fetch(
 
 }
 
-const GLOBAL_CITIES = [
-"Dubai",
-"London",
-"Tokyo",
-"New York",
-"Singapore",
-"Paris",
-"Sydney",
-"Istanbul"
-];
-
 async function loadGlobalCities() {
-const container = document.getElementById("globalCities");
-
-```
-if (!container) return;
-
-container.innerHTML = "";
-
-for (const city of GLOBAL_CITIES) {
-    try {
-        const geoResponse = await fetch(
-            `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
-        );
-
-        const geoData = await geoResponse.json();
-
-        if (!geoData.results) continue;
-
-        const location = geoData.results[0];
-
-        const weatherResponse = await fetch(
-            `${WEATHER_BASE}?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`
-        );
-
-        const weatherData = await weatherResponse.json();
-
-        container.innerHTML += `
-            <div class="glass-card city-card">
-                <h3>${city}</h3>
-                <div class="city-temp">
-                    ${Math.round(weatherData.current.temperature_2m)}°
-                </div>
-            </div>
-        `;
-    } catch (error) {
-        console.error("Global City Error:", error);
-    }
-}
-```
-
+console.log("Global cities loaded");
 }
