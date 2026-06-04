@@ -1,1 +1,49 @@
+@media(max-width:900px){
 
+    .temperature{
+
+        font-size:5rem;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .navbar{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    .search-section .glass-card{
+
+        flex-direction:column;
+
+    }
+
+    #searchBtn{
+
+        width:100%;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .temperature{
+
+        font-size:4rem;
+
+    }
+
+    h2{
+
+        font-size:1.2rem;
+
+    }
+
+}
