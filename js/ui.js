@@ -37,3 +37,57 @@ function updateCurrentWeather(
     .split("T")[1];
 
 }
+function renderHourlyForecast(hourlyData){
+
+    const container =
+    document.getElementById(
+        "hourlyForecast"
+    );
+
+    container.innerHTML = "";
+
+    const currentHour =
+    new Date().getHours();
+
+    for(let i=0;i<12;i++){
+
+        const hourIndex =
+        currentHour + i;
+
+        if(
+            !hourlyData.temperature_2m[
+                hourIndex
+            ]
+        ) continue;
+
+        const hour =
+        i === 0
+        ? "NOW"
+        : `${hourIndex % 24}:00`;
+
+        container.innerHTML += `
+
+        <div class="glass-card hour-card">
+
+            <div class="hour-time">
+                ${hour}
+            </div>
+
+            <div class="hour-icon">
+                ☁️
+            </div>
+
+            <div class="hour-temp">
+                ${Math.round(
+                    hourlyData.temperature_2m[
+                        hourIndex
+                    ]
+                )}°
+            </div>
+
+        </div>
+
+        `;
+    }
+
+}
