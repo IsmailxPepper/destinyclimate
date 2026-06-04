@@ -1,1 +1,89 @@
+.glass-card{
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
 
+.glass-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:
+    rgba(125,211,252,.35);
+
+    box-shadow:
+    0 15px 45px rgba(0,0,0,.35);
+
+}
+
+#searchBtn{
+
+    transition:.3s ease;
+
+}
+
+#searchBtn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 10px 25px rgba(125,211,252,.4);
+
+}
+
+.temperature{
+
+    animation:
+    fadeUp 1s ease forwards;
+
+}
+
+.hero-content{
+
+    animation:
+    fadeUp 1s ease forwards;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+.forecast-scroll{
+
+    display:flex;
+
+    gap:15px;
+
+    overflow-x:auto;
+
+    padding-bottom:10px;
+
+    scrollbar-width:none;
+
+}
+
+.forecast-scroll::-webkit-scrollbar{
+
+    display:none;
+
+}
