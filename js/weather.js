@@ -23,9 +23,7 @@ const geoResponse = await fetch(
         location.name
     );
 
-} catch (error) {
-    console.error("City Search Error:", error);
-}
+} 
 ```
 
 }
