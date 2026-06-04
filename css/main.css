@@ -1,1 +1,132 @@
+:root {
 
+    --bg-primary: #081120;
+    --bg-secondary: #10233f;
+
+    --glass: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.12);
+
+    --white: #ffffff;
+    --text-secondary: #cbd5e1;
+
+    --accent: #7dd3fc;
+
+    --shadow:
+        0 8px 32px rgba(0,0,0,0.25);
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #081120 0%,
+        #10233f 50%,
+        #17376d 100%
+    );
+
+    color:white;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+}
+
+.background-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at top,
+        rgba(125,211,252,0.12),
+        transparent 45%
+    );
+
+    z-index:-1;
+
+}
+
+main{
+
+    width:min(1400px,95%);
+
+    margin:auto;
+
+}
+
+h1,h2,h3{
+
+    font-weight:600;
+
+}
+
+h2{
+
+    margin-bottom:20px;
+
+    font-size:1.5rem;
+
+}
+
+section{
+
+    margin-top:40px;
+
+}
+
+button{
+
+    cursor:pointer;
+
+    border:none;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+input{
+
+    outline:none;
+
+    border:none;
+
+}
+
+footer{
+
+    text-align:center;
+
+    padding:60px 20px;
+
+    color:var(--text-secondary);
+
+}
+
+footer p:first-child{
+
+    font-size:1.1rem;
+
+    color:white;
+
+    margin-bottom:10px;
+
+}
