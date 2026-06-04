@@ -25,19 +25,13 @@ try {
     );
 
 } catch (error) {
-
     console.error("City Search Error:", error);
-
 }
 ```
 
 }
 
-async function loadWeatherData(
-latitude,
-longitude,
-cityName
-) {
+async function loadWeatherData(latitude, longitude, cityName) {
 
 ```
 try {
@@ -50,24 +44,19 @@ try {
 
     console.log("Weather Data:", data);
 
-    updateCurrentWeather(
-        cityName,
-        data
-    );
+    if (typeof updateCurrentWeather === "function") {
+        updateCurrentWeather(cityName, data);
+    }
 
-    if (data.hourly) {
-        renderHourlyForecast(
-            data.hourly
-        );
+    if (
+        typeof renderHourlyForecast === "function" &&
+        data.hourly
+    ) {
+        renderHourlyForecast(data.hourly);
     }
 
 } catch (error) {
-
-    console.error(
-        "Weather Loading Error:",
-        error
-    );
-
+    console.error("Weather Loading Error:", error);
 }
 ```
 
@@ -88,9 +77,7 @@ async function loadGlobalCities() {
 
 ```
 const container =
-    document.getElementById(
-        "globalCities"
-    );
+    document.getElementById("globalCities");
 
 if (!container) return;
 
@@ -100,10 +87,9 @@ for (const city of GLOBAL_CITIES) {
 
     try {
 
-        const geoResponse =
-            await fetch(
-                `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
-            );
+        const geoResponse = await fetch(
+            `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
+        );
 
         const geoData =
             await geoResponse.json();
@@ -123,29 +109,19 @@ for (const city of GLOBAL_CITIES) {
 
         container.innerHTML += `
         <div class="glass-card city-card">
-
             <h3>${city}</h3>
-
             <div class="city-temp">
-                ${Math.round(
-                    weatherData.current.temperature_2m
-                )}°
+                ${Math.round(weatherData.current.temperature_2m)}°
             </div>
-
         </div>
         `;
 
-    }
-
-    catch (error) {
-
+    } catch (error) {
         console.error(
             "Global City Error:",
             error
         );
-
     }
-
 }
 ```
 
