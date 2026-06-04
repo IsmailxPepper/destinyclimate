@@ -1,43 +1,32 @@
-const WEATHER_BASE =
-"https://api.open-meteo.com/v1/forecast";
+const WEATHER_BASE = "https://api.open-meteo.com/v1/forecast";
+const GEO_BASE = "https://geocoding-api.open-meteo.com/v1/search";
 
-const GEO_BASE =
-"https://geocoding-api.open-meteo.com/v1/search";
-
-async function searchCityWeather(city){
+async function searchCityWeather(city) {
+try {
 
 ```
-try{
-
-    const geoResponse =
-    await fetch(
+    const geoResponse = await fetch(
         `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
     );
 
-    const geoData =
-    await geoResponse.json();
+    const geoData = await geoResponse.json();
 
-    if(!geoData.results){
-
+    if (!geoData.results || geoData.results.length === 0) {
         alert("City not found");
         return;
-
     }
 
-    const location =
-    geoData.results[0];
+    const location = geoData.results[0];
 
-    loadWeatherData(
+    await loadWeatherData(
         location.latitude,
         location.longitude,
         location.name
     );
 
-}
+} catch (error) {
 
-catch(error){
-
-    console.error(error);
+    console.error("City Search Error:", error);
 
 }
 ```
@@ -48,41 +37,36 @@ async function loadWeatherData(
 latitude,
 longitude,
 cityName
-){
+) {
 
 ```
-try{
+try {
 
-    const response =
-    await fetch(
-
+    const response = await fetch(
         `${WEATHER_BASE}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&hourly=temperature_2m`
-
     );
 
-    const data =
-    await response.json();
+    const data = await response.json();
 
-    console.log(data);
+    console.log("Weather Data:", data);
 
     updateCurrentWeather(
         cityName,
         data
     );
 
-    if(data.hourly){
-
+    if (data.hourly) {
         renderHourlyForecast(
             data.hourly
         );
-
     }
 
-}
+} catch (error) {
 
-catch(error){
-
-    console.error(error);
+    console.error(
+        "Weather Loading Error:",
+        error
+    );
 
 }
 ```
@@ -100,42 +84,42 @@ const GLOBAL_CITIES = [
 "Istanbul"
 ];
 
-async function loadGlobalCities(){
+async function loadGlobalCities() {
 
 ```
 const container =
-document.getElementById(
-    "globalCities"
-);
+    document.getElementById(
+        "globalCities"
+    );
 
-if(!container) return;
+if (!container) return;
 
 container.innerHTML = "";
 
-for(const city of GLOBAL_CITIES){
+for (const city of GLOBAL_CITIES) {
 
-    try{
+    try {
 
         const geoResponse =
-        await fetch(
-            `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
-        );
+            await fetch(
+                `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
+            );
 
         const geoData =
-        await geoResponse.json();
+            await geoResponse.json();
 
-        if(!geoData.results) continue;
+        if (!geoData.results) continue;
 
         const location =
-        geoData.results[0];
+            geoData.results[0];
 
         const weatherResponse =
-        await fetch(
-            `${WEATHER_BASE}?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`
-        );
+            await fetch(
+                `${WEATHER_BASE}?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`
+            );
 
         const weatherData =
-        await weatherResponse.json();
+            await weatherResponse.json();
 
         container.innerHTML += `
         <div class="glass-card city-card">
@@ -153,9 +137,12 @@ for(const city of GLOBAL_CITIES){
 
     }
 
-    catch(error){
+    catch (error) {
 
-        console.error(error);
+        console.error(
+            "Global City Error:",
+            error
+        );
 
     }
 
