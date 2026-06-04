@@ -32,24 +32,18 @@ const geoResponse = await fetch(
 
 async function loadWeatherData(latitude, longitude, cityName) {
 try {
+const response = await fetch(
+`${WEATHER_BASE}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&hourly=temperature_2m`
+);
 
 ```
-    const response = await fetch(
-        `${WEATHER_BASE}?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&hourly=temperature_2m`
-    );
-
     const data = await response.json();
-
-    console.log("Weather Data:", data);
 
     if (typeof updateCurrentWeather === "function") {
         updateCurrentWeather(cityName, data);
     }
 
-    if (
-        typeof renderHourlyForecast === "function" &&
-        data.hourly
-    ) {
+    if (typeof renderHourlyForecast === "function" && data.hourly) {
         renderHourlyForecast(data.hourly);
     }
 
@@ -72,19 +66,15 @@ const GLOBAL_CITIES = [
 ];
 
 async function loadGlobalCities() {
+const container = document.getElementById("globalCities");
 
 ```
-const container =
-    document.getElementById("globalCities");
-
 if (!container) return;
 
 container.innerHTML = "";
 
 for (const city of GLOBAL_CITIES) {
-
     try {
-
         const geoResponse = await fetch(
             `${GEO_BASE}?name=${encodeURIComponent(city)}&count=1`
         );
@@ -99,8 +89,7 @@ for (const city of GLOBAL_CITIES) {
             `${WEATHER_BASE}?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m`
         );
 
-        const weatherData =
-            await weatherResponse.json();
+        const weatherData = await weatherResponse.json();
 
         container.innerHTML += `
             <div class="glass-card city-card">
@@ -110,12 +99,8 @@ for (const city of GLOBAL_CITIES) {
                 </div>
             </div>
         `;
-
     } catch (error) {
-        console.error(
-            "Global City Error:",
-            error
-        );
+        console.error("Global City Error:", error);
     }
 }
 ```
