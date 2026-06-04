@@ -131,3 +131,60 @@ function getWeatherIcon(code){
 
     return "☁️";
 }
+function renderDailyForecast(dailyData){
+
+    const container =
+    document.getElementById(
+        "dailyForecast"
+    );
+
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    for(let i = 0; i < 10; i++){
+
+        const date =
+        new Date(
+            dailyData.time[i]
+        );
+
+        const day =
+        i === 0
+        ? "Today"
+        : date.toLocaleDateString(
+            "en-US",
+            { weekday: "short" }
+        );
+
+        container.innerHTML += `
+
+        <div class="forecast-day">
+
+            <span>${day}</span>
+
+            <span>
+                ${getWeatherIcon(
+                    dailyData.weathercode[i]
+                )}
+            </span>
+
+            <span>
+                ${Math.round(
+                    dailyData.temperature_2m_min[i]
+                )}°
+            </span>
+
+            <span>
+                ${Math.round(
+                    dailyData.temperature_2m_max[i]
+                )}°
+            </span>
+
+        </div>
+
+        `;
+
+    }
+
+}
