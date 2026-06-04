@@ -37,9 +37,13 @@ async function loadWeatherData(latitude, longitude, cityName) {
 
         updateCurrentWeather(cityName, data);
 
-        if (data.hourly) {
-            renderHourlyForecast(data.hourly);
-        }
+if (data.hourly) {
+    renderHourlyForecast(data.hourly);
+}
+
+if (data.daily) {
+    renderDailyForecast(data.daily);
+}
 
     } catch (error) {
         console.error("Weather Loading Error:", error);
